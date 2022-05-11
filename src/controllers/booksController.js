@@ -49,19 +49,21 @@ const createBook = async function (req, res) {
 };
 
 // Get book
+//suraj bhoyar 8379008045
 
 const getBook = async function (req, res) {
   let category = req.query.category
   let user = req.query.userId
   let sub = req.query.subcategory
+  let data = req.query
   try {
-    if (!category && !user && !sub) {
-      let books = await booksModel.find({ isDeleted: false }).select({ _id: 1, title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 }).sort({ "title": 1 });
+    if (Object.keys(data).length==0) {
+      let books = await booksModel.find({ isDeleted: false }).select({ _id: 1, title: 1, excerpt: 1, userId: 1, category: 1, releasedAt: 1, reviews: 1 })
       // check data exits or not
-      if (books.length == 0) return res.status(404).send({ status: false, msg: 'Book Not Found' })
+      if (books.length == 0) return res.status(404).send({ status: false, msg: '1Book Not Found' })
       else if (books) { return res.status(200).send({ status: true, data: books }) };
     }
-    let result = await booksModel.find({ isDeleted: false, $or: [{ userId: user }, { category: category }, { subcategory: [sub] }] }).sort({ "title": 1 });
+    let result = await booksModel.find({$and:[{ isDeleted: false},{ userId: user }, { category: category }, { subcategory: sub }] }).sort({ "title": 1 });
     if (!result.length) return res.status(404).send({ status: false, msg: 'Book Not Found' })
     return res.status(200).send({ status: true, data: result });
   }
@@ -74,6 +76,7 @@ const getBook = async function (req, res) {
 
 
 module.exports = { createBook, getBook }
+
 
 
 
