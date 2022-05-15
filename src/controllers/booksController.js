@@ -52,8 +52,6 @@ const createBook = async function (req, res) {
 };
 
 // Get book
-
-
 const getBook = async function (req, res) {
   let filterquery= req.query
   try {
@@ -102,7 +100,6 @@ const updateById = async function (req, res) {
 
     return res.status(200).send({ status: true,message: 'Success', data: book });
   }
-
   catch (err) {
     return res.status(500).send({ status: false, message: err.message })
   }
