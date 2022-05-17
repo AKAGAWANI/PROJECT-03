@@ -121,7 +121,7 @@ const loginUser = async function (req, res) {
           organisation: "FunctionUp",
         },
         "project3-uranium",
-        { expiresIn: "48h" }
+        { expiresIn: "4h" }
       );
       
       res.setHeader("x-api-key", token);
